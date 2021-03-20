@@ -10,7 +10,7 @@ namespace Descent_into_the_Dungeon
     {
         public static void generator()
         {
-            Console.WriteLine("Sss");
+          
             int level = 1;
             int MAXPLACE = level + level * 2;
 
