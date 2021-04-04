@@ -8,10 +8,12 @@ namespace Descent_into_the_Dungeon
 {
     public class Mapgen
     {
-        public static void generator()
+
+
+        public static void generator(int level)
         {
-          
-            int level = 1;
+
+
             int MAXPLACE = level + level * 2;
 
             int[][] ModList = new int[3][];        //модификаторы  
@@ -54,31 +56,31 @@ namespace Descent_into_the_Dungeon
                 case 1:
                     Fuck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + " Puck you case 1");
-                    Console.ReadKey();
+
                     break;
                 case 2:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 2");
-                    Console.ReadKey();
+
                     break;
                 case 3:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 3");
-                    Console.ReadKey();
+
                     break;
                 case 4:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 4");
-                    Console.ReadKey();
+
                     break;
                 case 5:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 5");
-                    Console.ReadKey();
+
                     break;
                 default:
                     Console.WriteLine("Вы нажали неизвестную букву");
-                    Console.ReadKey();
+
                     break;
 
             }
