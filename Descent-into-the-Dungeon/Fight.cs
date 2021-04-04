@@ -8,71 +8,71 @@ namespace Descent_into_the_Dungeon
 {
     class Fight
     {
+        public static string change;
         //Метод для выбора действия при битве
-        public static void Change(int speed, ref int hp, int power, int erudition, int mob_hp, int mob_power, int mob_speed, int mob_erudition)
+        public static void Change(int speed, ref int hp, int power, int erudition, int arrmor, ref int mob_hp, int mob_power, int mob_speed, int mob_erudition, int mob_arrmor)
         {
             Console.WriteLine("Нажмите А для атаки или R для побега");
-            string change = Console.ReadLine();
+            change = Console.ReadLine();
+            change = change.ToUpper();
             switch (change)
             {
-                case "A": Battle(speed, ref hp, power, erudition, mob_hp, mob_power, mob_speed, mob_erudition); break;
-                case "R": Run(ref hp, speed, mob_power); break;
+                case "A": Battle(speed, ref hp, power, erudition, arrmor, ref mob_hp, mob_power, mob_speed, mob_erudition, mob_arrmor); break;
+                case "R": Run(ref hp, speed, mob_power, arrmor); break;
             }
         }
 
         //Метод для  битвы
-        public static void Battle(int speed, ref int hp, int power, int erudition, int mob_hp, int mob_power, int mob_speed, int mob_erudition)
+        public static void Battle(int speed, ref int hp, int power, int erudition, int arrmor, ref int mob_hp, int mob_power, int mob_speed, int mob_erudition, int mob_arrmor)
         {
-            if (speed > mob_speed)
+            while (true)
             {
-                while (hp > 1 && mob_hp > 1)
+                if (speed > mob_speed)
                 {
-                    Action(ref mob_hp, power, speed, erudition);
-                    if (hp <= 0 || mob_hp <= 0)
+                    Action(ref mob_hp, power, speed, erudition, mob_arrmor);
+                    if (mob_hp <= 0)
                     {
+                        Win(hp, mob_hp);
                         break;
                     }
-                    Action(ref hp, mob_power, mob_speed, mob_erudition);
-                    Win(hp, mob_hp);
-                    if (hp <= 0 || mob_hp <= 0)
+                    Action(ref hp, mob_power, mob_speed, mob_erudition, arrmor);
+                    if (hp <= 0)
                     {
+                        Win(hp, mob_hp);
                         break;
                     }
-                    Change(speed, ref hp, power, erudition, mob_hp, mob_power, mob_speed, mob_erudition);
                 }
-            }
-            else
-            {
-                while (hp > 1 && mob_hp > 1)
+                else
                 {
-
-                    Action(ref hp, mob_power, mob_speed, mob_erudition);
-                    Win(hp, mob_hp);
-                    if (hp <= 0 || mob_hp <= 0)
+                    Action(ref hp, mob_power, mob_speed, mob_erudition, arrmor);
+                    if (hp <= 0)
                     {
+                        Win(hp, mob_hp);
                         break;
                     }
-                    Action(ref mob_hp, power, speed, erudition);
-                    Win(hp, mob_hp);
-                    if (hp <= 0 || mob_hp <= 0)
+                    Action(ref mob_hp, power, speed, erudition, mob_arrmor);
+                    if (mob_hp <= 0)
                     {
+                        Win(hp, mob_hp);
                         break;
                     }
-                    Change(speed, ref hp, power, erudition, mob_hp, mob_power, mob_speed, mob_erudition);
                 }
+                Change(speed, ref hp, power, erudition, arrmor, ref mob_hp, mob_power, mob_speed, mob_erudition, mob_arrmor);
+                if (change == "R")
+                    break;
             }
         }
 
         //Метод для побега от врага
-        private static void Run(ref int hp, int speed, int mob_power)
+        private static void Run(ref int hp, int speed, int mob_power, int arrmor)
         {
             int i = rand.Next(1, 100);
             int mod;
             Dif_Mod(speed, out mod);
             if (i >= mod)
             {
-                Damage(ref hp, ref mob_power);
-                Console.WriteLine("Вы  убежали но враг нанёс вам  {0} урона", hp);
+                Damage(ref hp, mob_power, arrmor);
+                Console.WriteLine("Вы убежали, но враг оставил вам {0} хп", hp);
             }
             else
             {
@@ -89,8 +89,12 @@ namespace Descent_into_the_Dungeon
         }
 
         //Метод для нанесения урона
-        public static void Damage(ref int hp, ref int power)
+        public static void Damage(ref int hp, int power, int arrmor)
         {
+            if (power <= arrmor)
+                power = 1;
+            else
+                power -= arrmor;
             hp -= power;
         }
 
@@ -104,8 +108,8 @@ namespace Descent_into_the_Dungeon
             mod = 100 - stata;
         }
 
-        //Метод для нанесения крит урона
-        private static void Krit_Damage(int erudition, int power, ref int hp)
+        //Метод для нанесения урона
+        private static void Krit_Damage(int erudition, int power, ref int hp, int arrmor)
         {
             int i = rand.Next(1, 100);
             int mod;
@@ -114,35 +118,32 @@ namespace Descent_into_the_Dungeon
             //Console.WriteLine("mod ==========  {0}", mod);
             if (i >= mod)
             {
-                power += 5;
-                Damage(ref hp, ref power);
-                Console.WriteLine(" нанесён урон {0}", power);
+                power = (int)(power * 1.5);
+                Console.WriteLine("Критический урон!!!");
             }
-            else
-            {
-                Damage(ref hp, ref power);
-                Console.WriteLine("нанесён урон {0}", power);
-            }
+            //Modifiers.Modifier_Selection(ref hp, power, ref arrmor, Modifiers.mob_lvl);
+            Damage(ref hp, power, arrmor);
+            Console.WriteLine("Нанесён урон - {0}", power);
+            Console.WriteLine("Оставшееся хп - {0}", hp);
         }
-
-
         //метод для уклонения
-        private static void Evasion(int hp, int speed)
+        private static void Evasion(ref int hp, int power, int speed, int erudition, int arrmor)
         {
             int i = rand.Next(1, 100);
             int mod;
             Dif_Mod(speed, out mod);
             if (i >= mod)
             {
-                Console.WriteLine("уклонение");
+                Console.WriteLine("Уклонение");
+                Console.WriteLine("Оставшееся хп - {0}", hp);
             }
+            else
+                Krit_Damage(erudition, power, ref hp, arrmor);
         }
-
         //Метод для возможного исхода
-        private static void Action(ref int hp, int power, int speed, int erudition)
+        private static void Action(ref int hp, int power, int speed, int erudition, int arrmor)
         {
-            Evasion(hp, speed);
-            Krit_Damage(erudition, power, ref hp);
+            Evasion(ref hp, power, speed, erudition, arrmor);
         }
 
         static void Main(string[] args)
@@ -151,11 +152,13 @@ namespace Descent_into_the_Dungeon
             int erudition = 50;
             int mob_erudition = 25;
             int mob_hp = 100;
-            int power = 50;
+            int power = 20;
             int mob_power = 10;
             int speed = 45;
             int mob_speed = 4;
-            Change(speed, ref hp, power, erudition, mob_hp, mob_power, mob_speed, mob_erudition);
+            int arrmor = 5;
+            int mob_arrmor = 5;
+            Change(speed, ref hp, power, erudition, arrmor, ref mob_hp, mob_power, mob_speed, mob_erudition, mob_arrmor);
             Console.ReadKey();
         }
     }
