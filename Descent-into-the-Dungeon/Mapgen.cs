@@ -21,19 +21,24 @@ namespace Descent_into_the_Dungeon
             ModList[1] = new int[2] { 2, 3 };
             ModList[2] = new int[3] { 1, 3, 5 };
 
-            Mobs mob1 = new Mobs(1, 2, 3, ModList[0]);   //все известные мобы
-            Mobs mob2 = new Mobs(2, 3, 4, ModList[1]);
-            Mobs mob3 = new Mobs(3, 4, 5, ModList[2]);
+            int[][] Itemlist = new int[3][];
+            Itemlist[0] = new int[1] { 1 };
+            Itemlist[1] = new int[2] { 2, 3 };
+            Itemlist[2] = new int[3] { 1, 3, 5 };
+
+            Mobs mob1 = new Mobs(1, 2, 3, ModList[0], Itemlist[0], 1);   //все известные мобы
+            Mobs mob2 = new Mobs(2, 3, 4, ModList[1], Itemlist[1], 2);
+            Mobs mob3 = new Mobs(3, 4, 5, ModList[2], Itemlist[2], 3);
 
 
             Mobs[] Moblist = new Mobs[3];  /// Массив всех известных мобов, cюда заносить по критериям:
             Moblist[0] = mob1;             /// lvlstart - указатель уровня, с которого появляется в игре
             Moblist[1] = mob2;             /// modnumber -  номер используемого модификатора
             Moblist[2] = mob3;                 /// hp - случайный стат, нужно расширить для всех необходимых 
-                                               /// Modlist - лист возможных модификаторов                                                                   
+                                               /// Modlist - лист возможных модификаторов         
+
             Mobs[] Placelist = new Mobs[MAXPLACE];
             Random rnd = new Random();
-
 
             for (int z = 0; z <= MAXPLACE - 1; z++)                                /////подбираем мобов для уровня, опирась на lvlstart
             {
@@ -43,50 +48,48 @@ namespace Descent_into_the_Dungeon
                 {
                     Placelist[z] = Moblist[i];
                     Placelist[z].modnumber = Moblist[i].Modlist[rnd.Next(0, Moblist[i].Modlist.Length)];
+                    Placelist[z].itemnumber = Moblist[i].ItemList[rnd.Next(0, Moblist[i].ItemList.Length)];
                 }
                 else
                 {
                     z = z - 1;
                 }
-
             }
-
             switch (Placelist[1].modnumber)       //////пример работы модификатора в процессе боя. активатором считать тик, т.е условный клик мыши
             {
                 case 1:
                     Fuck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + " Puck you case 1");
-
+                    itemsmenu(Placelist[1].itemnumber);
                     break;
                 case 2:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 2");
-
+                    itemsmenu(Placelist[1].itemnumber);
                     break;
                 case 3:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 3");
-
+                    itemsmenu(Placelist[1].itemnumber);
                     break;
                 case 4:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 4");
-
+                    itemsmenu(Placelist[1].itemnumber);
                     break;
                 case 5:
                     Puck(Placelist[1].hp);
                     Console.WriteLine(Placelist[1].hp + "Fuck you case 5");
-
+                    itemsmenu(Placelist[1].itemnumber);
                     break;
                 default:
                     Console.WriteLine("Вы нажали неизвестную букву");
-
                     break;
-
             }
             void Fuck(int stat)    //// пример модификатора
             {
                 stat = stat + 5;
+
             }
             void Puck(int stat)    //// пример модификатора
             {
@@ -99,13 +102,18 @@ namespace Descent_into_the_Dungeon
         public int hp;
         public int lvlstart;
         public int modnumber;
-        public int[] Modlist; //я гений.            
-        public Mobs(int lvlstart, int modnumber, int hp, int[] Modlist)
+        public int[] Modlist; //я гений.
+        public int itemnumber;
+        public int[] ItemList;
+        public Mobs(int lvlstart, int modnumber, int hp, int[] Modlist, int[] ItemList, int itemnumber)
         {
             this.lvlstart = lvlstart;
             this.modnumber = modnumber;
             this.hp = hp;
             this.Modlist = Modlist;
+            this.ItemList = ItemList;
+            this.itemnumber = itemnumber;
+
         }
     }
 }
