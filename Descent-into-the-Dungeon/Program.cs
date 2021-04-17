@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Descent_into_the_Dungeon
+namespace Menu
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Descent_into_the_Dungeon
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Game());
         }
     }
 }

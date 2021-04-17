@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанных со сборкой.
-[assembly: AssemblyTitle("Descent-into-the-Dungeon")]
+[assembly: AssemblyTitle("Menu")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Descent-into-the-Dungeon")]
+[assembly: AssemblyProduct("Menu")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("829e753e-c2ea-4536-884e-89936a2d8203")]
+[assembly: Guid("9aea7422-6586-4747-b2cf-85c6fc6ce35d")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

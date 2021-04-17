@@ -1,7 +1,7 @@
 ﻿
-namespace Descent_into_the_Dungeon
+namespace Menu
 {
-    partial class Form1
+    partial class Game
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -29,10 +29,20 @@ namespace Descent_into_the_Dungeon
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.SuspendLayout();
+            // 
+            // Game
+            // 
+            this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "Game";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            //this.SetStyle(System.Windows.Forms.ControlStyles.UserPaint| System.Windows.Forms.ControlStyles.AllPaintingInWmPaint|System.Windows.Forms.ControlStyles.DoubleBuffer, true);
+            this.DoubleBuffered = true;
+            //this.UpdateStyles();
+            this.Load += new System.EventHandler(this.Game_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
