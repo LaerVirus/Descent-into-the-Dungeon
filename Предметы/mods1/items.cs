@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Descent_into_the_Dungeon
+namespace mods1
 {
-    public class Items
+    class Items
     {
         public double maxhp;
         public double hp;
@@ -24,9 +24,12 @@ namespace Descent_into_the_Dungeon
             this.intelligens = intelligens;
             this.armor = armor;
         }
-       public void itemsmenu (int n)
-       {                                   
-            Random x = new Random();            
+
+       public  void itemsmenu ()
+        {
+           /////////////////////////////////////////////////////////                            
+            Random x = new Random();
+            int n = x.Next(0, 28);
             double hp = maxhp;
             if (hp > maxhp)
             {
@@ -146,7 +149,8 @@ namespace Descent_into_the_Dungeon
                     Console.WriteLine($"вы получили Heart of Tarrasque , тем самым увеличили свой запас здоровья ставшее : {maxhp}  ");
                     break;
             }
-       }
+            Console.ReadKey();
+        }
         static double item0(ref double maxhp)
         {
             //фрукт жизни
@@ -240,19 +244,19 @@ namespace Descent_into_the_Dungeon
         static double item15(ref double hp)
         {
             //Маленькое зелье здоровья ////////////////////////////////////////////////////имба
-            hp += 1;
+            hp += 10;
             return hp;
         }
         static double item16(ref double hp)
         {
             //Среднее зелье здоровья ////////////////////////////////////////////////////имба
-            hp += 5;
+            hp += 20;
             return hp;
         }
         static double item17(ref double hp)
         {
             //Большое зелье здоровья////////////////////////////////////////////////////имба
-            hp += 10;
+            hp += 20;
             return hp;
         }
         static double itemt18(ref double speed)
