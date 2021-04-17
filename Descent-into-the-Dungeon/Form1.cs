@@ -27,8 +27,6 @@ namespace Descent_into_the_Dungeon
         {
             if (e.Delta > 0 && mainHero.Location != leftBorder)
             {
-                System.Threading.TimerCallback tm = new System.Threading.TimerCallback(MoveMap);
-                Timer timer = new Timer(MoveMap, 1, 0, 1000);
                 MoveMap(10);
             }
             if (e.Delta < 0 && enemy7.Location != rightBorder)
