@@ -20,7 +20,7 @@ namespace Descent_into_the_Dungeon
             InitializeComponent();
             leftBorder = mainHero.Location;
             rightBorder = enemy3.Location;
-            Map.MouseWheel += new MouseEventHandler(Map_MouseWheel);
+            mapPanel.MouseWheel += new MouseEventHandler(Map_MouseWheel);
         }
 
         private void Map_MouseWheel(object sender, MouseEventArgs e)
@@ -42,7 +42,7 @@ namespace Descent_into_the_Dungeon
 
         private void Map_MouseLeave(object sender, EventArgs e)
         {
-            Map.MouseWheel -= Map_MouseWheel;
+            map.MouseWheel -= Map_MouseWheel;
         }
 
         private void MoveMap(object distance)
@@ -56,6 +56,21 @@ namespace Descent_into_the_Dungeon
             enemy5.Location = new Point(enemy5.Location.X + run, enemy5.Location.Y);
             enemy6.Location = new Point(enemy6.Location.X + run, enemy6.Location.Y);
             enemy7.Location = new Point(enemy7.Location.X + run, enemy7.Location.Y);
+            int scrollRun;
+            if (run < 0)
+            {
+                scrollRun = run + 1;
+            }
+            else
+            {
+                scrollRun = run - 1;
+            }
+            scroll.Location = new Point(scroll.Location.X - scrollRun, scroll.Location.Y);
+        }
+
+        static public void SetMapImage(ref PictureBox mapPictureBox, string imageLocation)
+        {
+            mapPictureBox.Image = Image.FromFile(imageLocation);
         }
     }
 }
